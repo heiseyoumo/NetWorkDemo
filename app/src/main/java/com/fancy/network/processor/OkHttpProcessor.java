@@ -1,5 +1,8 @@
 package com.fancy.network.processor;
 
+import android.os.Handler;
+import android.os.Looper;
+
 import com.fancy.network.callback.ICallback;
 
 /**
@@ -18,14 +21,21 @@ public class OkHttpProcessor implements IProcessor {
             "        }\n" +
             "    }";
 
+    private Handler handler = new Handler(Looper.getMainLooper());
+
     @Override
     public void getUrl(String url, final ICallback callback) {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    Thread.sleep(3000);
-                    callback.onSuccess(json);
+                    Thread.sleep(300);
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            callback.onSuccess(json);
+                        }
+                    });
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

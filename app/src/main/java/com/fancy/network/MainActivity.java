@@ -3,7 +3,6 @@ package com.fancy.network;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -26,9 +25,11 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(OrderCountBean orderCountBean) {
                         OrderCountBean.DataBean data = orderCountBean.getData();
-                        int dispatched = data.getDispatched();
-                        int undelivered = data.getUndelivered();
-                        Log.d("MainActivity", "dispatched=" + dispatched + ",undelivered=" + undelivered);
+                        if (orderCountBean.getRespCode().equals("0000")) {
+                            Toast.makeText(MainActivity.this, "成功", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(MainActivity.this, "接口请求失败", Toast.LENGTH_SHORT).show();
+                        }
                     }
 
                     @Override
