@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 HashMap<String, Object> hashMap = new HashMap<>();
+                hashMap.put("name", "pkw");
                 HttpHelper.getInstance().getUrl(url, hashMap, new HttpResponseCallback<JsonBean>() {
                     @Override
                     public void onSuccess(JsonBean jsonBean) {
