@@ -8,6 +8,7 @@ import com.fancy.network.interceptor.LogInterceptor;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -24,10 +25,16 @@ import okhttp3.Response;
 public class OkHttpProcessor implements IProcessor {
     private Handler handler = new Handler(Looper.getMainLooper());
     OkHttpClient okHttpClient;
+    private static final int CONNECT_TIMEOUT = 30;
+    private static final int WRITE_TIMEOUT = 300;
+    private static final int READ_TIMEOUT = 30;
 
     public OkHttpProcessor() {
         OkHttpClient.Builder builder = new OkHttpClient().newBuilder();
         builder.addInterceptor(new LogInterceptor());
+        builder.connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS);
+        builder.writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS);
+        builder.readTimeout(READ_TIMEOUT, TimeUnit.SECONDS);
         okHttpClient = builder.build();
     }
 
