@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.os.Looper;
 
 import com.fancy.network.callback.ICallback;
+import com.fancy.network.interceptor.LogInterceptor;
 
 import java.io.IOException;
 import java.util.Map;
@@ -25,9 +26,10 @@ public class OkHttpProcessor implements IProcessor {
     OkHttpClient okHttpClient;
 
     public OkHttpProcessor() {
-        okHttpClient = new OkHttpClient();
+        OkHttpClient.Builder builder = new OkHttpClient().newBuilder();
+        builder.addInterceptor(new LogInterceptor());
+        okHttpClient = builder.build();
     }
-
 
     @Override
     public void getUrl(String url, Map<String, Object> map, final ICallback callback) {
