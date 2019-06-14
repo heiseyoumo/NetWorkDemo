@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
                 HttpHelper.getInstance().getUrl(url, new HttpResponseCallback<JsonBean>() {
                     @Override
                     public void onSuccess(JsonBean jsonBean) {
-                        textView.setText(jsonBean.getDesc() + ",创造者:" + jsonBean.getCreator());
+                        textView.append(jsonBean.getDesc() + ",创造者:" + jsonBean.getCreator());
                     }
 
                     @Override

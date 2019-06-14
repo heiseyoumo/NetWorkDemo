@@ -6,6 +6,7 @@ import android.os.Looper;
 import com.fancy.network.callback.ICallback;
 
 import java.io.IOException;
+import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -40,8 +41,8 @@ public class OkHttpProcessor implements IProcessor {
     @Override
     public void getUrl(String url, final ICallback callback) {
         final Request request = new Request.Builder()
-                .addHeader("user_agent", "a")
                 .url(url)
+                .addHeader("User-Agent", "a")
                 .build();
         Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {
@@ -56,8 +57,8 @@ public class OkHttpProcessor implements IProcessor {
             }
 
             @Override
-            public void onResponse(Call call, Response response) {
-                final String result = response.body().toString();
+            public void onResponse(Call call, Response response) throws IOException {
+                final String result = response.body().string();
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
@@ -70,5 +71,11 @@ public class OkHttpProcessor implements IProcessor {
 
     @Override
     public void postUrl(String url, ICallback callback) {
+
+    }
+
+
+    public void appendParams(Map<String, Object> map) {
+
     }
 }
