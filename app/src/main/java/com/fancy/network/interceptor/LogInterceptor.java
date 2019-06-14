@@ -15,7 +15,7 @@ public class LogInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
-        request.method();
+        String method = request.method();
         RequestBody body = request.body();
         Response response = chain.proceed(request);
         return response;
