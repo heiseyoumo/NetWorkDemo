@@ -41,7 +41,6 @@ public class OkHttpProcessor implements IProcessor {
     public void getUrl(String url, final ICallback callback) {
         final Request request = new Request.Builder()
                 .url(url)
-                .get()//默认就是GET请求，可以不写
                 .build();
         Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {
@@ -56,7 +55,7 @@ public class OkHttpProcessor implements IProcessor {
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(Call call, Response response) {
                 final String result = response.body().toString();
                 handler.post(new Runnable() {
                     @Override
