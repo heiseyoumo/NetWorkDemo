@@ -40,6 +40,7 @@ public class OkHttpProcessor implements IProcessor {
     @Override
     public void getUrl(String url, final ICallback callback) {
         final Request request = new Request.Builder()
+                .addHeader("user_agent", "a")
                 .url(url)
                 .build();
         Call call = okHttpClient.newCall(request);
