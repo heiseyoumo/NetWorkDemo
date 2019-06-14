@@ -11,6 +11,8 @@ import com.fancy.network.bean.JsonBean;
 import com.fancy.network.callback.HttpResponseCallback;
 import com.fancy.network.util.HttpHelper;
 
+import java.util.HashMap;
+
 public class MainActivity extends AppCompatActivity {
     Handler handler = new Handler();
     String url = "http://c.3g.163.com/photo/api/set/0001%2F2250173.json";
@@ -24,7 +26,8 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HttpHelper.getInstance().getUrl(url, new HttpResponseCallback<JsonBean>() {
+                HashMap<String, Object> hashMap = new HashMap<>();
+                HttpHelper.getInstance().getUrl(url, hashMap, new HttpResponseCallback<JsonBean>() {
                     @Override
                     public void onSuccess(JsonBean jsonBean) {
                         textView.append(jsonBean.getDesc() + ",创造者:" + jsonBean.getCreator());
