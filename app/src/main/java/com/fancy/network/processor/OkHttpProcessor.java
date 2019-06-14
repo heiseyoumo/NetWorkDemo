@@ -7,7 +7,9 @@ import com.fancy.network.callback.ICallback;
 import com.fancy.network.interceptor.LogInterceptor;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
@@ -41,7 +43,7 @@ public class OkHttpProcessor implements IProcessor {
     @Override
     public void getUrl(String url, Map<String, Object> map, final ICallback callback) {
         final Request request = new Request.Builder()
-                .url(url)
+                .url(url + getUrlByParams(map))
                 .addHeader("User-Agent", "a")
                 .build();
         Call call = okHttpClient.newCall(request);
@@ -102,6 +104,21 @@ public class OkHttpProcessor implements IProcessor {
         });
     }
 
+    public String getUrlByParams(Map<String, Object> params) {
+        if (params == null || params.isEmpty()) {
+            return "";
+        }
+        Set<Map.Entry<String, Object>> entries = params.entrySet();
+        Iterator<Map.Entry<String, Object>> iterator = entries.iterator();
+        String url = "&";
+        while (iterator.hasNext()) {
+            Map.Entry<String, Object> next = iterator.next();
+            String key = next.getKey();
+            String value = next.getValue().toString();
+            url += key + "=" + value;
+        }
+        return url;
+    }
 
     public RequestBody appendParams(Map<String, Object> params) {
         FormBody.Builder builder = new FormBody.Builder();

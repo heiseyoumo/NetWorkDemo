@@ -16,6 +16,7 @@ public class LogInterceptor implements Interceptor {
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
         String method = request.method();
+        String string = request.url().toString();
         RequestBody body = request.body();
         Response response = chain.proceed(request);
         return response;
